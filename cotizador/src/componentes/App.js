@@ -3,10 +3,18 @@ import logo from './../logo.svg';
 import Header from './Header';
 import Formulario from './Formulario';
 import { obtenerDiferenciaAnio, calcularMarca, obtenerPlan } from './../helper';
+import Resumen from './Resumen';
+import Resultado from './Resultado';
 
 class App extends Component {
 
+  state = {
+    resultado: '',
+    datos: {}
+  }
+
   cotizarSeguro = (datos) => {
+
     console.log(datos);
     const { marca, plan, year } = datos;
 
@@ -32,20 +40,47 @@ class App extends Component {
     resultado  = parseFloat(incrementoPlan * resultado).toFixed(2);
     console.log(resultado);
 
+    // Crear objeto para el Resumen
+    const datosAuto = {
+      marca: marca,
+      plan: plan,
+      year: year
+    }
+
+    // Ya se tiene el costo
+    this.setState({
+      resultado: resultado,
+      datos: datosAuto
+    })
+
   }
   
   render() {
     return (
       <div className="App contenedor">
+
           <Header
-            titulo= 'Cotizador de Seguro de Auto'
+                  titulo= 'Cotizador de Seguro de Auto'
           ></Header>
 
           <div className="contenedor-formulario">
-            <Formulario cotizarSeguro = {this.cotizarSeguro} ></Formulario>
+
+            <Formulario 
+                        cotizarSeguro = {this.cotizarSeguro} 
+            ></Formulario>
+
+            <Resumen
+                      datos={this.state.datos}
+            ></Resumen>
+
+            <Resultado
+                        resultado={this.state.resultado}
+            ></Resultado>
+
           </div>
 
           <img src={logo} className="App-logo" alt="logo" />
+
       </div>      
     )
   }

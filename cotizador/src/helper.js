@@ -30,3 +30,7 @@ export function obtenerPlan(plan) {
 export function primeraMayuscula(texto) {
     return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
+
+export function planAcento(texto) {
+    return (texto === 'basico') ? 'Básico' : 'Completo';
+}
