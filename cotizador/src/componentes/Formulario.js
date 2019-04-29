@@ -10,13 +10,27 @@ class Formulario extends Component {
 
     cotizarSeguro = (e) => {
         e.preventDefault();
+
+        // Leer el plan
+        const plan = this.planBasicoRef.current.checked ? 'basico' : 'completo';
         
         // Obtener los datos
-        console.log(this.marcaRef.current.value);
-        // Crear el objeto
-        // Enviarlo al componente principal
+        // console.log(this.marcaRef.current.value);
 
-        console.log('Enviado...');
+        // Crear el objeto
+        const infoAuto = {
+            marca: this.marcaRef.current.value,
+            year: this.yearRef.current.value,
+            plan: plan
+        }
+
+        // Enviarlo al componente principal
+        // console.log(infoAuto);
+        console.log('Enviando...');
+        this.props.cotizarSeguro(infoAuto);
+
+        // Resetear el Formulario (opcional)
+        // e.currentTarget.reset();
     }
 
     render() {
@@ -34,6 +48,7 @@ class Formulario extends Component {
                 <div className="campo">
                     <label htmlFor="">Año</label>
                     <select name="year" ref={this.yearRef}>
+                        <option value="2019">2019</option>
                         <option value="2018">2018</option>
                         <option value="2017">2017</option>
                         <option value="2016">2016</option>

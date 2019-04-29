@@ -2,8 +2,38 @@ import React, { Component } from 'react';
 import logo from './../logo.svg';
 import Header from './Header';
 import Formulario from './Formulario';
+import { obtenerDiferenciaAnio, calcularMarca, obtenerPlan } from './../helper';
 
 class App extends Component {
+
+  cotizarSeguro = (datos) => {
+    console.log(datos);
+    const { marca, plan, year } = datos;
+
+    // ***** Agregar una base de 2000
+    let resultado = 2000;
+
+    // ***** Obtener la diferencia de año
+    const diferencia = obtenerDiferenciaAnio(year);
+    // console.log('La diferencia es: ' + diferencia);
+
+    // ***** Por cada año restar el 3%
+    resultado -= ((diferencia * 3) * resultado) / 100;
+    // console.log(resultado);
+
+    // ***** Americano 15% Asiatico 5% y Europeo 30% de incremento al valor actual
+    resultado *= calcularMarca(marca);
+    // console.log(resultado);
+
+    // ***** Plan Auto , Básico +20% y Americano +50%
+    let incrementoPlan = obtenerPlan(plan);
+
+    // ***** Dependiendo Plan incrementar
+    resultado  = parseFloat(incrementoPlan * resultado).toFixed(2);
+    console.log(resultado);
+
+  }
+  
   render() {
     return (
       <div className="App contenedor">
@@ -12,7 +42,7 @@ class App extends Component {
           ></Header>
 
           <div className="contenedor-formulario">
-            <Formulario></Formulario>
+            <Formulario cotizarSeguro = {this.cotizarSeguro} ></Formulario>
           </div>
 
           <img src={logo} className="App-logo" alt="logo" />
